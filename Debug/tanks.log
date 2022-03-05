@@ -1,2 +1,4 @@
 ﻿  Player.cpp
+C:\Users\r2d2t\Desktop\tanks\Player.cpp(53,56): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\r2d2t\Desktop\tanks\Player.cpp(57,57): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
   tanks.vcxproj -> C:\Users\r2d2t\Desktop\tanks\Debug\tanks.exe
