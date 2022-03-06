@@ -6,7 +6,7 @@
 
 int main() {
 	sf::RenderWindow window(sf::VideoMode(W, H), "Game");
-	Player p("tank.png", "player", 5.4, 5, 5, 0.1, 500, 500);
+	Player p("tank.png", "player", 5.4, 3, 5, 0.1, 500, 500);
 
 	int framerate = 100;
 	float elapsedMillisecondsExpected = 1000.f / framerate;

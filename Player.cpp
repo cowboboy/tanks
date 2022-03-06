@@ -5,7 +5,7 @@
 Player::Player(std::string f, std::string n, float speedRotate, float maxSpeedMovement, float speedRotateTurret, float acceleration, float x, float y) : Entity(f, n),
 	m_speedRotate(speedRotate), m_maxSpeedMovement(maxSpeedMovement), m_speedRotateTurret(speedRotateTurret), m_coords(x, y), m_acceleration(acceleration)
 {
-	m_speedMovement = 0.1;
+	m_speedMovement = 0;
 	m_sprite.setTextureRect(sf::IntRect(0, 1, 300, 123));
 	m_sprite.setPosition(m_coords);
 	m_sprite.setOrigin(150, 123 / 2);
@@ -25,13 +25,17 @@ void Player::Update(float time)
 {
 	float lenght = sqrt(cos(m_anglePlayer * DEGTORAD) * cos(m_anglePlayer * DEGTORAD) + sin(m_anglePlayer * DEGTORAD) * sin(m_anglePlayer * DEGTORAD));
 	if (m_moveForward) {
-		m_coords += m_speedMovement * time * sf::Vector2f(cos(m_anglePlayer * DEGTORAD) / lenght, sin(m_anglePlayer * DEGTORAD) / lenght) * 0.01f;
-		if (abs(m_speedMovement) < m_maxSpeedMovement) m_speedMovement += m_acceleration * time * 0.001;
+		if (m_speedMovement < m_maxSpeedMovement) m_speedMovement += m_acceleration * time * 0.001;
 	}
 	if (m_moveBack) {
-		m_coords += m_speedMovement * time * sf::Vector2f(-cos(m_anglePlayer * DEGTORAD) / lenght, -sin(m_anglePlayer * DEGTORAD) / lenght) * 0.01f;
-		if (abs(m_speedMovement) < m_maxSpeedMovement) m_speedMovement += m_acceleration * time * 0.001;
+		if (m_speedMovement < m_maxSpeedMovement) m_speedMovement -= m_acceleration * time * 0.001;
 	}
+	if (!m_moveForward && !m_moveBack || m_moveForward && m_moveBack)
+		if (m_speedMovement - m_acceleration > 0) m_speedMovement -= m_acceleration * time * 0.005;
+		else if (m_speedMovement + m_acceleration < 0) m_speedMovement += m_acceleration * time * 0.005;
+		else m_speedMovement = 0;
+
+	m_coords += m_speedMovement * time * sf::Vector2f(cos(m_anglePlayer * DEGTORAD) / lenght, sin(m_anglePlayer * DEGTORAD) / lenght) * 0.01f;
 
 	if (m_rotateLeft) {
 		m_anglePlayer += -0.001f * time * m_speedRotate;
