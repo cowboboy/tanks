@@ -6,7 +6,7 @@
 
 int main() {
 	sf::RenderWindow window(sf::VideoMode(W, H), "Game");
-	Player p("tank.png", 5.4, 2.0, 5, 500, 500);
+	Player p("tank.png", "player", 5.4, 5, 5, 0.1, 500, 500);
 
 	int framerate = 100;
 	float elapsedMillisecondsExpected = 1000.f / framerate;
@@ -16,7 +16,7 @@ int main() {
 		sf::Clock clock;
 		float elapsedMilliseconds = clock.restart().asMicroseconds();
 
-		p.Control(window);
+		p.control(window);
 		p.rotateTurret();
 
 		sf::Event event;
@@ -30,9 +30,10 @@ int main() {
 		int frames = int(elapsedMilliseconds / elapsedMillisecondsExpected) + 1;
 		for (int i = 0; i < frames; ++i) p.Update(elapsedMillisecondsExpected);
 
+		std::cout << p.m_speedMovement << std::endl;
+
 		window.clear();
-		window.draw(p.getSprite());
-		window.draw(p.getSpriteTurret());
+		p.draw(window);
 		window.display();
 	}
 	return 0;

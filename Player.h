@@ -1,24 +1,20 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Entity.h"
 
-class Player
+class Player : public Entity
 {
 public:
-	Player(std::string f, float m_speedRotate, float m_speedMovement, float speedRotateTurret, float x, float y);
-	sf::Vector2f getCoords();
-	void setAngle(float angle);
-	sf::Sprite getSprite();
-	sf::Sprite getSpriteTurret();
+	Player(std::string f, std::string n, float speedRotate, float maxSpeedMovement, float speedRotateTurret, float acceleration, float x, float y);
 	void Update(float time);
+	void control(sf::RenderWindow& w);
+	void draw(sf::RenderWindow& w);
+	sf::Vector2f getCoords();
 	void rotateTurret();
-	void Control(sf::RenderWindow& w);
 	bool m_moveForward, m_moveBack, m_rotateRight, m_rotateLeft;
+	float m_speedMovement;
 private:
-	float m_speedRotate, m_speedRotateTurret, m_speedMovement, m_anglePlayer, m_angleTargetTurret, m_angleTurret;
+	float m_speedRotate, m_speedRotateTurret, m_maxSpeedMovement, m_acceleration, m_anglePlayer, m_angleTargetTurret, m_angleTurret;
 	sf::Vector2f m_coords, m_targetPos;
-	sf::Image m_imagePlayer;
-	sf::Texture m_texturePlayer;
-	sf::Sprite m_spritePlayer;
-	sf::Sprite m_spriteTurret;
 };
 

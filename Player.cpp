@@ -2,21 +2,18 @@
 #include <iostream>
 #include "Config.h"
 
-Player::Player(std::string f, float speedRotate, float speedMovement, float speedRotateTurret, float x, float y) : 
-	m_speedRotate(speedRotate), m_speedMovement(speedMovement), m_coords(x, y), m_speedRotateTurret(speedRotateTurret),
-	m_anglePlayer(0), m_angleTurret(0), m_angleTargetTurret(0)
+Player::Player(std::string f, std::string n, float speedRotate, float maxSpeedMovement, float speedRotateTurret, float acceleration, float x, float y) : Entity(f, n),
+	m_speedRotate(speedRotate), m_maxSpeedMovement(maxSpeedMovement), m_speedRotateTurret(speedRotateTurret), m_coords(x, y), m_acceleration(acceleration)
 {
-	m_imagePlayer.loadFromFile("images/" + f);
-	m_imagePlayer.createMaskFromColor(sf::Color(255, 255, 255));
-	m_texturePlayer.loadFromImage(m_imagePlayer);
-	m_spritePlayer.setTexture(m_texturePlayer);
-	m_spritePlayer.setTextureRect(sf::IntRect(0, 1, 300, 123));
-	m_spritePlayer.setPosition(m_coords);
-	m_spritePlayer.setOrigin(150, 123 / 2);
-	m_spriteTurret.setTexture(m_texturePlayer);
+	m_speedMovement = 0.1;
+	m_sprite.setTextureRect(sf::IntRect(0, 1, 300, 123));
+	m_sprite.setPosition(m_coords);
+	m_sprite.setOrigin(150, 123 / 2);
+	m_spriteTurret.setTexture(m_texture);
 	m_spriteTurret.setTextureRect(sf::IntRect(352, 1, 255, 123));
 	m_spriteTurret.setOrigin(88, 123 / 2);
-	m_moveForward = m_moveBack = false;
+	m_moveForward = m_moveBack = m_rotateLeft = m_rotateRight = false;
+	m_anglePlayer = m_angleTurret = m_angleTargetTurret = 0;
 }
 
 sf::Vector2f Player::getCoords()
@@ -24,24 +21,18 @@ sf::Vector2f Player::getCoords()
 	return m_coords;
 }
 
-sf::Sprite Player::getSprite()
-{
-	return m_spritePlayer;
-}
-
-sf::Sprite Player::getSpriteTurret()
-{
-	return m_spriteTurret;
-}
-
-
 void Player::Update(float time)
 {
 	float lenght = sqrt(cos(m_anglePlayer * DEGTORAD) * cos(m_anglePlayer * DEGTORAD) + sin(m_anglePlayer * DEGTORAD) * sin(m_anglePlayer * DEGTORAD));
-	if (m_moveForward)
+	if (m_moveForward) {
 		m_coords += m_speedMovement * time * sf::Vector2f(cos(m_anglePlayer * DEGTORAD) / lenght, sin(m_anglePlayer * DEGTORAD) / lenght) * 0.01f;
-	if (m_moveBack)
+		if (abs(m_speedMovement) < m_maxSpeedMovement) m_speedMovement += m_acceleration * time * 0.001;
+	}
+	if (m_moveBack) {
 		m_coords += m_speedMovement * time * sf::Vector2f(-cos(m_anglePlayer * DEGTORAD) / lenght, -sin(m_anglePlayer * DEGTORAD) / lenght) * 0.01f;
+		if (abs(m_speedMovement) < m_maxSpeedMovement) m_speedMovement += m_acceleration * time * 0.001;
+	}
+
 	if (m_rotateLeft) {
 		m_anglePlayer += -0.001f * time * m_speedRotate;
 	}
@@ -58,10 +49,10 @@ void Player::Update(float time)
 		m_spriteTurret.setRotation(m_angleTurret * RADTODEG);
 	}
 
-	m_spritePlayer.setRotation(m_anglePlayer);
-	m_spritePlayer.setPosition(m_coords);
+	m_sprite.setRotation(m_anglePlayer);
+	m_sprite.setPosition(m_coords);
 	m_spriteTurret.setPosition(m_coords);
-	m_moveForward = m_moveBack = m_rotateLeft = m_rotateRight = false;
+	m_moveBack = m_moveForward = m_rotateLeft = m_rotateRight = false;
 }
 
 void Player::rotateTurret()
@@ -71,7 +62,7 @@ void Player::rotateTurret()
 	m_angleTargetTurret = atan2(dY, dX);
 }
 
-void Player::Control(sf::RenderWindow& w)
+void Player::control(sf::RenderWindow& w)
 {
 	sf::Vector2i pixelPos = sf::Mouse::getPosition(w);
 	m_targetPos = w.mapPixelToCoords(pixelPos);
@@ -87,4 +78,10 @@ void Player::Control(sf::RenderWindow& w)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 		m_moveBack = true;
 	}
+}
+
+void Player::draw(sf::RenderWindow& w)
+{
+	w.draw(m_sprite);
+	w.draw(m_spriteTurret);
 }
