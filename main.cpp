@@ -3,7 +3,7 @@
 #include <cmath>
 #include "Player.h"
 #include "Config.h"
-
+// Проверка GitHub
 int main() {
 	sf::RenderWindow window(sf::VideoMode(W, H), "Game");
 	Player p("tank.png", "player", 5.4, 3, 5, 0.1, 500, 500);
