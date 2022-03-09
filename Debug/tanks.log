@@ -1,8 +1,7 @@
-﻿  Player.cpp
-C:\Users\r2d2t\Desktop\tanks\Player.cpp(29,93): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-C:\Users\r2d2t\Desktop\tanks\Player.cpp(33,93): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-C:\Users\r2d2t\Desktop\tanks\Player.cpp(36,93): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-C:\Users\r2d2t\Desktop\tanks\Player.cpp(37,98): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-C:\Users\r2d2t\Desktop\tanks\Player.cpp(49,56): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-C:\Users\r2d2t\Desktop\tanks\Player.cpp(53,57): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+﻿  Enemy.cpp
+C:\Users\r2d2t\Desktop\tanks\Enemy.cpp(53,62): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\r2d2t\Desktop\tanks\Enemy.cpp(57,63): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+  main.cpp
+C:\Users\r2d2t\Desktop\tanks\main.cpp(19,27): warning C4244: 'initializing': conversion from 'sf::Int64' to 'int', possible loss of data
+  Generating Code...
   tanks.vcxproj -> C:\Users\r2d2t\Desktop\tanks\Debug\tanks.exe
