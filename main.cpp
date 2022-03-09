@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Config.h"
-
+// Проверка GitHub
 int main() {
 	sf::RenderWindow window(sf::VideoMode(W, H), "Game");
 	Player p("tank.png", "player", sf::Vector2f(500, 500), 3, 0.5f, 2, 5.f);
