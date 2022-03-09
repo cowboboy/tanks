@@ -25,31 +25,31 @@ void Player::Update(float time)
 {
 	float lenght = sqrt(cos(m_anglePlayer * DEGTORAD) * cos(m_anglePlayer * DEGTORAD) + sin(m_anglePlayer * DEGTORAD) * sin(m_anglePlayer * DEGTORAD));
 	if (m_moveForward) {
-		if (m_speedMovement < m_maxSpeedMovement) m_speedMovement += m_acceleration * time * 0.001;
+		if (m_speedMovement < m_maxSpeedMovement) m_speedMovement += m_acceleration * time * 0.005;
 	}
 	if (m_moveBack) {
-		if (m_speedMovement < m_maxSpeedMovement) m_speedMovement -= m_acceleration * time * 0.001;
+		if (m_speedMovement < m_maxSpeedMovement) m_speedMovement -= m_acceleration * time * 0.005;
 	}
 	if (!m_moveForward && !m_moveBack || m_moveForward && m_moveBack)
 		if (m_speedMovement - m_acceleration > 0) m_speedMovement -= m_acceleration * time * 0.005;
 		else if (m_speedMovement + m_acceleration < 0) m_speedMovement += m_acceleration * time * 0.005;
 		else m_speedMovement = 0;
 
-	m_coords += m_speedMovement * time * sf::Vector2f(cos(m_anglePlayer * DEGTORAD) / lenght, sin(m_anglePlayer * DEGTORAD) / lenght) * 0.01f;
+	m_coords += m_speedMovement * time * sf::Vector2f(cos(m_anglePlayer * DEGTORAD) / lenght, sin(m_anglePlayer * DEGTORAD) / lenght) * 0.1f;
 
 	if (m_rotateLeft) {
-		m_anglePlayer += -0.001f * time * m_speedRotate;
+		m_anglePlayer += -0.005f * time * m_speedRotate;
 	}
 	if (m_rotateRight) {
-		m_anglePlayer += 0.001f * time * m_speedRotate;
+		m_anglePlayer += 0.005f * time * m_speedRotate;
 	}
 	
 	if (m_angleTurret < m_angleTargetTurret) { // positive direction
-		m_angleTurret += 0.001f * time * m_speedRotate * 0.01;
+		m_angleTurret += 0.001f * time * m_speedRotate * 0.2;
 		m_spriteTurret.setRotation(m_angleTurret * RADTODEG);
 	}
 	if (m_angleTurret > m_angleTargetTurret) { // negative direction
-		m_angleTurret += -0.001f * time * m_speedRotate * 0.01;
+		m_angleTurret += -0.001f * time * m_speedRotate * 0.2;
 		m_spriteTurret.setRotation(m_angleTurret * RADTODEG);
 	}
 
