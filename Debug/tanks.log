@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  Player.cpp
 C:\Users\Ильнар\Documents\tanks\Player.cpp(28,93): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
 C:\Users\Ильнар\Documents\tanks\Player.cpp(31,93): warning C4244: -=: преобразование "double" в "float", возможна потеря данных
@@ -16,3 +17,12 @@ C:\Users\Ильнар\Documents\tanks\main.cpp(55,33): warning C4244: аргум
 C:\Users\Ильнар\Documents\tanks\main.cpp(55,25): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
   Создание кода...
   tanks.vcxproj -> C:\Users\Ильнар\Documents\tanks\Debug\tanks.exe
+=======
+﻿  Enemy.cpp
+C:\Users\r2d2t\Desktop\tanks\Enemy.cpp(53,62): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\r2d2t\Desktop\tanks\Enemy.cpp(57,63): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+  main.cpp
+C:\Users\r2d2t\Desktop\tanks\main.cpp(19,27): warning C4244: 'initializing': conversion from 'sf::Int64' to 'int', possible loss of data
+  Generating Code...
+  tanks.vcxproj -> C:\Users\r2d2t\Desktop\tanks\Debug\tanks.exe
+>>>>>>> 32612ac126a4c8ad9c3432dd73d057c5921c3782
