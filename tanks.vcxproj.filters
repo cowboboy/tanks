@@ -48,5 +48,8 @@
 >>>>>>> 32612ac126a4c8ad9c3432dd73d057c5921c3782
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
