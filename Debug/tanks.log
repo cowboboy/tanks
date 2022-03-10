@@ -1,6 +1,18 @@
-﻿  main.cpp
-C:\Users\r2d2t\Desktop\tanks\main.cpp(13,69): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\r2d2t\Desktop\tanks\main.cpp(29,29): warning C4244: 'initializing': conversion from 'sf::Int64' to 'float', possible loss of data
-C:\Users\r2d2t\Desktop\tanks\main.cpp(59,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\r2d2t\Desktop\tanks\main.cpp(59,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  tanks.vcxproj -> C:\Users\r2d2t\Desktop\tanks\Debug\tanks.exe
+﻿  Enemy.cpp
+C:\Users\Ильнар\Documents\tanks\Enemy.cpp(31,62): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+C:\Users\Ильнар\Documents\tanks\Enemy.cpp(35,63): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+  Entity.cpp
+  main.cpp
+C:\Users\Ильнар\Documents\tanks\main.cpp(13,69): warning C4305: аргумент: усечение из "double" в "float"
+C:\Users\Ильнар\Documents\tanks\main.cpp(29,29): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
+C:\Users\Ильнар\Documents\tanks\main.cpp(59,33): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\Ильнар\Documents\tanks\main.cpp(59,25): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+  Player.cpp
+C:\Users\Ильнар\Documents\tanks\Player.cpp(28,93): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+C:\Users\Ильнар\Documents\tanks\Player.cpp(31,93): warning C4244: -=: преобразование "double" в "float", возможна потеря данных
+C:\Users\Ильнар\Documents\tanks\Player.cpp(34,93): warning C4244: -=: преобразование "double" в "float", возможна потеря данных
+C:\Users\Ильнар\Documents\tanks\Player.cpp(35,98): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+C:\Users\Ильнар\Documents\tanks\Player.cpp(48,55): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+C:\Users\Ильнар\Documents\tanks\Player.cpp(52,56): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+  Создание кода...
+  tanks.vcxproj -> C:\Users\Ильнар\Documents\tanks\Debug\tanks.exe
