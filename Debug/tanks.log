@@ -1,2 +1,33 @@
+<<<<<<< HEAD
 ﻿Player.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __thiscall Entity::Entity(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (??0Entity@@QAE@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0@Z) в функции "public: __thiscall Player::Player(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,float,float,float,float,float,float)" (??0Player@@QAE@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0MMMMMM@Z).
 C:\Users\Ильнар\Documents\tanks\Debug\tanks.exe : fatal error LNK1120: неразрешенных внешних элементов: 1
+=======
+<<<<<<< HEAD
+﻿  Player.cpp
+C:\Users\Ильнар\Documents\tanks\Player.cpp(28,93): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+C:\Users\Ильнар\Documents\tanks\Player.cpp(31,93): warning C4244: -=: преобразование "double" в "float", возможна потеря данных
+C:\Users\Ильнар\Documents\tanks\Player.cpp(34,93): warning C4244: -=: преобразование "double" в "float", возможна потеря данных
+C:\Users\Ильнар\Documents\tanks\Player.cpp(35,98): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+C:\Users\Ильнар\Documents\tanks\Player.cpp(48,55): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+C:\Users\Ильнар\Documents\tanks\Player.cpp(52,56): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+  main.cpp
+C:\Users\Ильнар\Documents\tanks\view.h(16,17): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+C:\Users\Ильнар\Documents\tanks\view.h(19,20): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+C:\Users\Ильнар\Documents\tanks\view.h(23,18): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+C:\Users\Ильнар\Documents\tanks\view.h(26,21): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+C:\Users\Ильнар\Documents\tanks\main.cpp(12,57): warning C4305: аргумент: усечение из "double" в "float"
+C:\Users\Ильнар\Documents\tanks\main.cpp(25,29): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
+C:\Users\Ильнар\Documents\tanks\main.cpp(55,33): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\Ильнар\Documents\tanks\main.cpp(55,25): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+  Создание кода...
+  tanks.vcxproj -> C:\Users\Ильнар\Documents\tanks\Debug\tanks.exe
+=======
+﻿  Enemy.cpp
+C:\Users\r2d2t\Desktop\tanks\Enemy.cpp(53,62): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\r2d2t\Desktop\tanks\Enemy.cpp(57,63): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+  main.cpp
+C:\Users\r2d2t\Desktop\tanks\main.cpp(19,27): warning C4244: 'initializing': conversion from 'sf::Int64' to 'int', possible loss of data
+  Generating Code...
+  tanks.vcxproj -> C:\Users\r2d2t\Desktop\tanks\Debug\tanks.exe
+>>>>>>> 32612ac126a4c8ad9c3432dd73d057c5921c3782
+>>>>>>> e41f8648a4b8f3c81062531ceeab26517245e114

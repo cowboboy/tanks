@@ -24,6 +24,9 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -35,10 +38,14 @@
     <ClInclude Include="Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="view.h">
+=======
+    <ClInclude Include="Enemy.h">
+>>>>>>> 32612ac126a4c8ad9c3432dd73d057c5921c3782
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
