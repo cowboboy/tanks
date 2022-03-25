@@ -1,0 +1,5 @@
+﻿  Enemy.cpp
+C:\Users\GAMING\Desktop\tanks-master\Enemy.cpp(6,28): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+  main.cpp
+  Создание кода...
+  tanks.vcxproj -> C:\Users\GAMING\Desktop\tanks-master\x64\Debug\tanks.exe
