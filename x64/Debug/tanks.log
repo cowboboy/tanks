@@ -1,5 +1,6 @@
-﻿  Enemy.cpp
-C:\Users\GAMING\Desktop\tanks-master\Enemy.cpp(6,28): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
-  main.cpp
-  Создание кода...
-  tanks.vcxproj -> C:\Users\GAMING\Desktop\tanks-master\x64\Debug\tanks.exe
+﻿  main.cpp
+C:\Users\r2d2t\Desktop\tanks1\tanks\main.cpp(17,16): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+main.obj : error LNK2019: unresolved external symbol "public: __cdecl b2World::b2World(struct b2Vec2 const &)" (??0b2World@@QEAA@AEBUb2Vec2@@@Z) referenced in function "void __cdecl `dynamic initializer for 'World''(void)" (??__EWorld@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol "public: __cdecl b2World::~b2World(void)" (??1b2World@@QEAA@XZ) referenced in function "void __cdecl `dynamic atexit destructor for 'World''(void)" (??__FWorld@@YAXXZ)
+.\lib\Box2D.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\Users\r2d2t\Desktop\tanks1\tanks\x64\Debug\tanks.exe : fatal error LNK1120: 2 unresolved externals

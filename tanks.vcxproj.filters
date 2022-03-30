@@ -9,6 +9,7 @@
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="pWindow.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h" />
@@ -19,5 +20,6 @@
     <ClInclude Include="Interface.h" />
     <ClInclude Include="pWindow.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
 </Project>

@@ -1,13 +1,14 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <Box2D/Box2D.h>
 #include <cmath>
 #include "Player.h"
 #include "Enemy.h"
 #include "Config.h"
 #include "Map.h"
-#include "view.h"
 #include "Interface.h"
 #include "pWindow.h"
+#include "World.h"
 
 int main() {
 	sf::RenderWindow window(sf::VideoMode(W, H), "Game");
@@ -17,11 +18,13 @@ int main() {
 
 	std::vector<pWindow*> pWindows;
 
-	Player* p = new Player("tank1.png", "player", sf::Vector2f(500, 500), 64, 48, 50, 10);
+	Player* p = new Player("tank1.png", "player", sf::Vector2f(500, 500), 64, 48, 50, 50, 1);
+	Player* p2 = new Player("tank1.png", "player", sf::Vector2f(800, 500), 64, 48, 50, 50, 2);
 
 	int framerate = 100;
 	float elapsedMillisecondsExpected = 1.f / framerate;
 	sf::Clock clock;
+
 	while (window.isOpen())
 	{
 		float elapsedMilliseconds = clock.restart().asSeconds();
@@ -33,12 +36,15 @@ int main() {
 				window.close();
 		}
 
+		World.Step(1 / 60.f, 8, 3);
+
 		float sleepMilliseconds = elapsedMillisecondsExpected - elapsedMilliseconds;
 		
 		int frames = int(elapsedMilliseconds / elapsedMillisecondsExpected) + 1;
 		if (p) {
 			for (int i = 0; i < frames; ++i) {
 				p->Update(elapsedMillisecondsExpected);
+				p2->Update(elapsedMillisecondsExpected);
 			}
 		}
 
@@ -51,8 +57,12 @@ int main() {
 		m.Update(elapsedMilliseconds);
 		i.Update(elapsedMilliseconds);
 		m.draw(window);
+
 		if (p) {
 			p->draw(window);
+		}
+		if (p2) {
+			p2->draw(window);
 		}
 		i.draw(window);
 		for (auto& a : pWindows) {

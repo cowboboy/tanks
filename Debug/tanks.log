@@ -1,2 +1,14 @@
-﻿  main.cpp
-  tanks.vcxproj -> C:\Users\r2d2t\Desktop\tanks\Debug\tanks.exe
+﻿  Player.cpp
+C:\Users\r2d2t\Desktop\tanks1\tanks\Player.cpp(11,47): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\r2d2t\Desktop\tanks1\tanks\Player.cpp(11,44): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\r2d2t\Desktop\tanks1\tanks\Player.cpp(59,98): warning C4244: 'argument': conversion from 'double' to 'float32', possible loss of data
+C:\Users\r2d2t\Desktop\tanks1\tanks\Player.cpp(59,61): warning C4244: 'argument': conversion from 'double' to 'float32', possible loss of data
+  tanks.vcxproj -> C:\Users\r2d2t\Desktop\tanks1\tanks\Debug\tanks.exe

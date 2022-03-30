@@ -1,18 +1,17 @@
 #include "Enemy.h"
 #include <iostream>
 #include "Config.h"
+#include "Bullet.h"
 
-Enemy::Enemy(std::string f, std::string n, sf::Vector2f c, float maxSM, float a, float sR, float sRT) :
-	Entity(f, n, c, maxSM, a, sR, sRT)
+Enemy::Enemy(std::string f, std::string n, sf::Vector2f c, float w, float h, int s, float sR) :
+	Entity(f, n, c, w, h, s, sR)
 {
-	m_sprite.setTextureRect(sf::IntRect(0, 1, 300, 123));
-	m_image.createMaskFromColor(sf::Color(41, 33, 59));
+	//body->SetUserData("enemy");
+	freezeTime = 0;
+	m_sprite.setTextureRect(sf::IntRect(0, 0, w, h));
+	m_sprite.setOrigin(w / 2, h / 2);
 	m_sprite.setPosition(m_coords);
-	m_sprite.setOrigin(150, 123 / 2);
-	m_spriteTurret.setTexture(m_texture);
-	m_spriteTurret.setTextureRect(sf::IntRect(352, 1, 255, 123));
-	m_spriteTurret.setOrigin(88, 123 / 2);
-	m_angle = 0;
+	
 }
 
 sf::Vector2f Enemy::getCoords()
@@ -20,28 +19,42 @@ sf::Vector2f Enemy::getCoords()
 	return m_coords;
 }
 
-float Enemy::getSpeedMovement()
+void Enemy::shoot()
 {
-	return m_speed;
+	if (bullets.size() == 0) {
+		Bullet* B = new Bullet("", "bull", getCoords(), 100, m_angle);
+		bullets.push_back(B);
+	}
 }
 
-void Enemy::getDistance(sf::Vector2f c)
+void Enemy::isPlayer(sf::Vector2f c)
 {
-	m_distance = sqrt((c.x - getCoords().x) * (c.x - getCoords().x) + (c.y - getCoords().y) * (c.y - getCoords().y));
+	int targetAngle = atan((c.y - m_coords.y) / (c.x - m_coords.x)) * RADTODEG;
+	if ((int)m_angle % 360 < targetAngle + 2 && (int)m_angle % 360 > targetAngle - 2) {
+		shoot();
+	}
 }
 
 void Enemy::Update(float time)
 {
-	
-}
+	body->SetAngularVelocity(time * m_speedRotate);
 
-void Enemy::rotateTurret(sf::Vector2f c)
-{
-	
-} 
+	for (auto& b : bullets) {
+		b->Update(time);
+		if (b->timer <= 0) { delete b; bullets.erase(bullets.begin()); }
+	}
+	b2Vec2 pos = body->GetPosition();
+	float angle = body->GetAngle();
+	m_sprite.setPosition(pos.x * SCALE, pos.y * SCALE);
+	m_sprite.setRotation(angle * RADTODEG);
+	//m_sprite.setRotation(m_angle);
+	//m_sprite.setPosition(m_coords);
+}
 
 void Enemy::draw(sf::RenderWindow& w)
 {
 	w.draw(m_sprite);
-	w.draw(m_spriteTurret);
+	for (auto& b : bullets) {
+		b->draw(w);
+	}
 }

@@ -1,17 +1,16 @@
 #pragma once
 #include "Entity.h"
+#include "Bullet.h"
 class Enemy : public Entity
 {
 public:
-	Enemy(std::string f, std::string n, sf::Vector2f c, float maxSM, float a, float sR, float sRT);
+	float freezeTime;
+	Enemy(std::string f, std::string n, sf::Vector2f c, float w, float h, int s, float sR);
 	void Update(float time);
 	void draw(sf::RenderWindow& w);
+	std::vector<Bullet*> bullets;
+	void shoot();
 	sf::Vector2f getCoords();
-	float getSpeedMovement();
-	void getDistance(sf::Vector2f c);
-	void rotateTurret(sf::Vector2f c);
-private:
-	sf::Vector2f m_targetPos;
-	float m_distance;
+	void isPlayer(sf::Vector2f c);
 };
 

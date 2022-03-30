@@ -1,2 +1,3 @@
 C:\Users\r2d2t\Desktop\tanks\Debug\tanks.exe
 C:\Users\Ильнар\Documents\tanks\Debug\tanks.exe
+C:\Users\r2d2t\Desktop\tanks1\tanks\Debug\tanks.exe
