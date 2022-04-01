@@ -5,7 +5,7 @@
 #include <Box2D/Box2D.h>
 #include "World.h"
 
-Player::Player(std::string f, std::string n, sf::Vector2f c, float w, float h, int s, float sR, int b) :
+Player::Player(std::string f, std::string n, sf::Vector2f c, Scene* lvl, float w, float h, int s, float sR, int b) :
 	Entity(f, n, c, w, h, s, sR)
 {
 	m_sprite.setTextureRect(sf::IntRect(0, 0, w, h));
@@ -15,6 +15,9 @@ Player::Player(std::string f, std::string n, sf::Vector2f c, float w, float h, i
 	m_dir = true;
 	m_changeDir = 1;
 	button = b;
+	m_lvl = lvl;
+	m_name = n;
+	m_life = 100;
 }
 
 sf::Vector2f Player::getCoords()
@@ -24,7 +27,7 @@ sf::Vector2f Player::getCoords()
 
 void Player::shoot()
 {
-	Bullet* B = new Bullet("", "bull", getCoords(), 100, m_angle);
+	Bullet* B = new Bullet("", m_name, getCoords(), m_lvl, 100, m_angle);
 	bullets.push_back(B);
 }
 
@@ -33,10 +36,10 @@ void Player::Update(float time)
 	control();
 	float lenght = sqrt(cos(m_angle * DEGTORAD) * cos(m_angle * DEGTORAD) + sin(m_angle * DEGTORAD) * sin(m_angle * DEGTORAD));
 
-	if (m_dir && !m_move) {
+	if (m_life && m_dir && !m_move) {
 		body->SetAngularVelocity(time * m_speedRotate);
 	}
-	else if (!m_dir && !m_move) {
+	else if (m_life &&  !m_dir && !m_move) {
 		body->SetAngularVelocity(-time * m_speedRotate);
 	}
 	else {
@@ -54,7 +57,7 @@ void Player::Update(float time)
 	m_coords.y = pos.y * SCALE;
 	m_angle = angle * RADTODEG;
 
-	if (m_move) {
+	if (m_life && m_move) {
 		body->SetAngularVelocity(0);
 		body->SetLinearVelocity(b2Vec2(m_speed * 0.1 * cos(angle) / lenght, m_speed * 0.1 * sin(angle) / lenght));
 	}

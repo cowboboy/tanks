@@ -3,12 +3,12 @@
 #include <Box2D/Box2D.h>
 #include <cmath>
 #include "Player.h"
-#include "Enemy.h"
 #include "Config.h"
 #include "Map.h"
 #include "Interface.h"
 #include "pWindow.h"
 #include "World.h"
+#include <Scene.h>
 
 int main() {
 	sf::RenderWindow window(sf::VideoMode(W, H), "Game");
@@ -17,9 +17,13 @@ int main() {
 	Map m("map.png", W, H);
 
 	std::vector<pWindow*> pWindows;
+	Scene* lvl = new Scene();
 
-	Player* p = new Player("tank1.png", "player", sf::Vector2f(500, 500), 64, 48, 50, 50, 1);
-	Player* p2 = new Player("tank1.png", "player", sf::Vector2f(800, 500), 64, 48, 50, 50, 2);
+	Player* p = new Player("tank1.png", "player1", sf::Vector2f(500, 500), lvl, 64, 48, 50, 20, 1);
+	Player* p2 = new Player("tank1.png", "player2", sf::Vector2f(800, 500), lvl, 64, 48, 50, 20, 2);
+
+	lvl->players.push_back(p);
+	lvl->players.push_back(p2);
 
 	int framerate = 100;
 	float elapsedMillisecondsExpected = 1.f / framerate;
