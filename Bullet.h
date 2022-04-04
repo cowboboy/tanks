@@ -1,20 +1,36 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Entity.h"
-#include "Scene.h"
+#include "Config.h"
+
 class Bullet {
+	sf::Image imageBullet;
+	sf::Texture textureBullet;
+	sf::Sprite spriteBullet;
+	sf::Vector2f position;
+
+	std::string name;
+
+	sf::Image imageExplosion;
+	sf::Texture textureExplosion;
+	sf::Sprite spriteExplosion;
+	const int widthFrame = 130;
+	int iFrames, jFrames;
+	int iCurrFrame, jCurrFrame;
+	float animationTime;
+	bool explode;
+
+	float speed;
+
+	float rotation;
+
+	bool shooting;
+
+	const float timeLife = 3;
+	float currTimeLife;
 public:
-	float timer;
-	int m_speed;
-	float m_angle;
-	Bullet(std::string f, std::string n, sf::Vector2f c, Scene* lvl, int speed, float angle);
-	void Update(float time);
-	void draw(sf::RenderWindow& w);
-private:
-	Scene* m_lvl;
-	std::string m_name;
-	sf::Vector2f m_coords;
-	sf::RectangleShape bullet;
+	Bullet();
+	void Update(float gameTime, sf::Vector2f positionTank, float rotationGun, bool shoot);
+	void Draw(sf::RenderWindow& w);
 };
 
 

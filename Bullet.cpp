@@ -1,32 +1,87 @@
 #include <SFML/Graphics.hpp>
 #include "Bullet.h"
-#include "Config.h"
-#include "Player.h"
-Bullet::Bullet(std::string f, std::string n, sf::Vector2f c, Scene* lvl, int speed, float a) {
-	m_coords = c;
-	m_angle = a;
-	timer = 30;
-	bullet.setSize(sf::Vector2f(10, 5));
-	bullet.setFillColor(sf::Color::Black);
-	bullet.setRotation(m_angle);
-	bullet.setPosition(c);
-	m_lvl = lvl;
-	m_speed = speed;
-	m_name = n;
+
+Bullet::Bullet()
+{
+	imageBullet.loadFromFile("images/bullet.png");
+	textureBullet.loadFromImage(imageBullet);
+	spriteBullet.setTexture(textureBullet);
+	shooting = false;
+
+	speed = 2;
+
+	imageExplosion.loadFromFile("images/explosion.png");
+	textureExplosion.loadFromImage(imageExplosion);
+	spriteExplosion.setTexture(textureExplosion);
+	iCurrFrame = 0;
+	jCurrFrame = 0;
+	iFrames = spriteExplosion.getLocalBounds().width / widthFrame;
+	jFrames = spriteExplosion.getLocalBounds().height / widthFrame;
+	explode = false;
+
+	position = sf::Vector2f(0, 0);
+
+	currTimeLife = timeLife;
 }
 
-void Bullet::Update(float time)
+void Bullet::Update(float gameTime, sf::Vector2f positionTank, float rotationGun, bool shoot)
 {
-	float lenght = sqrt(cos(m_angle * DEGTORAD) * cos(m_angle * DEGTORAD) + sin(m_angle * DEGTORAD) * sin(m_angle * DEGTORAD));
-	m_coords += m_speed * time * sf::Vector2f(cos(m_angle * DEGTORAD) / lenght, sin(m_angle * DEGTORAD) / lenght);
-	bullet.setPosition(m_coords);
-	timer -= time;
-	for (auto& p : m_lvl->players) {
-		if (abs(m_coords.x - p->m_coords.x) < 32 && abs(m_coords.y - p->m_coords.y) < 32 && m_name != p->m_name) {
-			p->m_life = 0;
+	if (!shooting && !explode) {
+		shooting = shoot;
+		position = positionTank;
+		rotation = rotationGun;
+		currTimeLife = timeLife;
+	}
+
+	if (currTimeLife <= 0) {
+		shooting = false;
+		explode = true;
+	}
+
+	if (shooting) {
+		position += speed * sf::Vector2f(cos(rotation * DEGTORAD), sin(rotation * DEGTORAD)) * gameTime * 100.f; 
+	}
+
+	if (explode) {
+		if (animationTime > 0.1) {
+			if ((iCurrFrame + 1) * (jCurrFrame + 1) == iFrames * jFrames) {
+				iCurrFrame = 0;
+				jCurrFrame = 0;
+				explode = false;
+			}
+			else {
+				if (iCurrFrame < iFrames - 1) {
+					++iCurrFrame;
+				}
+				else {
+					iCurrFrame = 0;
+					++jCurrFrame;
+				}
+			}
+			animationTime = 0;
+		}
+		else {
+			animationTime += gameTime;
 		}
 	}
+
+	currTimeLife -= gameTime;
 }
-void Bullet::draw(sf::RenderWindow& w) {
-	w.draw(bullet);
+void Bullet::Draw(sf::RenderWindow& w)
+{
+	if (explode) {
+		spriteExplosion.setPosition(position);
+		spriteExplosion.setRotation(rotation);
+		spriteExplosion.setTextureRect(sf::IntRect(iCurrFrame * widthFrame, jCurrFrame * widthFrame, widthFrame, widthFrame));
+		spriteExplosion.setScale(0.8, 0.8);
+		spriteExplosion.setOrigin(spriteExplosion.getLocalBounds().width / 2, spriteExplosion.getLocalBounds().height / 2);
+		w.draw(spriteExplosion);
+	}
+	if (shooting) {
+		spriteBullet.setPosition(position);
+		spriteBullet.setRotation(rotation);
+		spriteBullet.setScale(0.03, 0.03);
+		spriteBullet.setOrigin(spriteBullet.getLocalBounds().width / 2, spriteBullet.getLocalBounds().height / 2);
+		w.draw(spriteBullet);
+	}
 }

@@ -9,7 +9,7 @@ Entity::Entity(std::string f, std::string n, sf::Vector2f c, float w, float h, i
 	bdef.type = b2_dynamicBody;
 	bdef.position.Set(c.x / SCALE, c.y / SCALE);
 	body = World.CreateBody(&bdef);
-	body->CreateFixture(&shape, 10);
+	body->CreateFixture(&shape, 100);
 	//
 	m_coords = c;
 	m_image.loadFromFile("images/" + f);

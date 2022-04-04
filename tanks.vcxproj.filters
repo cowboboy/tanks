@@ -10,6 +10,8 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="Emitter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h" />
@@ -21,5 +23,12 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="Emitter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Particles">
+      <UniqueIdentifier>{9198d811-5a0a-4fd7-81a1-974e25632a9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
