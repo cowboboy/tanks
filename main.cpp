@@ -8,8 +8,8 @@
 #include "Interface.h"
 #include "pWindow.h"
 #include "World.h"
-#include "Scene.h"
 #include "Emitter.h"
+#include <FPS.h>
 
 
 int main() {
@@ -20,30 +20,28 @@ int main() {
 	sf::Image imageBullet;
 	imageBullet.loadFromFile("images/bullet.png");
 
-	
-	
-
+	std::list<Player*> tanks;
 
 	Interface i(W, H);
 	Map m("images/particle.png", W, H);
 
 	std::vector<pWindow*> pWindows;
-	Scene* lvl = new Scene();
 
-	Player* p = new Player("tank1.png", "player1", sf::Vector2f(500, 500), lvl, 64, 48, 10, 20, 1, imageBullet);
-	lvl->players.push_back(p);
-	Player* p2 = new Player("tank1.png", "player2", sf::Vector2f(800, 500), lvl, 64, 48, 10, 20, 2, imageBullet);
-	lvl->players.push_back(p2);
+	Player* p = new Player(sf::Vector2f(700, 300), "p1", 0);
+	Player* p2 = new Player(sf::Vector2f(500, 500), "p2", 1);
+	tanks.push_back(p);
+	tanks.push_back(p2);
 
-	Emitter* smoke = new Emitter(imageParticle, imageParticle);;
+	Emitter* smoke = new Emitter(imageParticle, imageParticle);
 
-	int framerate = 100;
-	float elapsedMillisecondsExpected = 1.f / framerate;
 	sf::Clock clock;
+	window.setFramerateLimit(60);
+
+	FPS fps;
 
 	while (window.isOpen())
 	{
-		float elapsedMilliseconds = clock.restart().asSeconds();
+		float elapsedSeconds = clock.restart().asSeconds();
 		
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -54,41 +52,30 @@ int main() {
 
 		World.Step(1 / 60.f, 8, 3);
 
-		float sleepMilliseconds = elapsedMillisecondsExpected - elapsedMilliseconds;
-		
-		int frames = int(elapsedMilliseconds / elapsedMillisecondsExpected) + 1;
-		if (p) {
-			for (int i = 0; i < frames; ++i) {
-				p->Update(elapsedMillisecondsExpected);
-				p2->Update(elapsedMillisecondsExpected);
-			}
+		for (auto tank : tanks) {
+			tank->Update(elapsedSeconds, tanks);
 		}
 
 		smoke->EngineSmoke(sf::Vector2f(500, 500));
-		smoke->Update(elapsedMilliseconds * 1000);
-
-		for (auto p : lvl->players) {
-			if (p->m_life <= 0) {
-				smoke->EngineSmoke(p->m_coords);
-			}
-		}
+		smoke->Update(elapsedSeconds * 1000);
 
 		if (i.getTime() <= 0 && pWindows.size() == 0) {
 			pWindows.push_back(new pWindow("a", W / 2, H / 2));
-			delete p;
-			p = nullptr;
+			//delete p;
+			//p = nullptr;
 		}
 
-		m.Update(elapsedMilliseconds);
-		i.Update(elapsedMilliseconds);
+		m.Update(elapsedSeconds);
+		i.Update(elapsedSeconds);
 		m.draw(window);
+
+		fps.Update(elapsedSeconds);
+		std::cout << fps.getFPS() << std::endl;
 		
-		if (p) {
-			p->draw(window);
+		for (auto tank : tanks) {
+			tank->Draw(window);
 		}
-		if (p2) {
-			p2->draw(window);
-		}
+
 		smoke->Draw(window);
 		i.draw(window);
 		for (auto& a : pWindows) {

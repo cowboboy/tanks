@@ -1,30 +1,33 @@
-#include <SFML/Graphics.hpp>
 #include "Bullet.h"
 
-Bullet::Bullet()
+Bullet::Bullet(sf::Sprite _spriteBullet, sf::Sprite _spriteExplosion, std::string _nameBullet)
 {
-	imageBullet.loadFromFile("images/bullet.png");
-	textureBullet.loadFromImage(imageBullet);
-	spriteBullet.setTexture(textureBullet);
+	spriteBullet = _spriteBullet;
+	spriteExplosion = _spriteExplosion;
+
 	shooting = false;
 
 	speed = 2;
 
-	imageExplosion.loadFromFile("images/explosion.png");
-	textureExplosion.loadFromImage(imageExplosion);
-	spriteExplosion.setTexture(textureExplosion);
 	iCurrFrame = 0;
 	jCurrFrame = 0;
 	iFrames = spriteExplosion.getLocalBounds().width / widthFrame;
 	jFrames = spriteExplosion.getLocalBounds().height / widthFrame;
 	explode = false;
+	animationTime = 0;  
 
 	position = sf::Vector2f(0, 0);
 
 	currTimeLife = timeLife;
+
+	damage = 30;
+
+	deleteBullet = false;
+
+	nameBullet = _nameBullet;
 }
 
-void Bullet::Update(float gameTime, sf::Vector2f positionTank, float rotationGun, bool shoot)
+void Bullet::Update(float gameTime, sf::Vector2f positionTank, float rotationGun, bool shoot, std::list<Player*> tanks)
 {
 	if (!shooting && !explode) {
 		shooting = shoot;
@@ -48,6 +51,7 @@ void Bullet::Update(float gameTime, sf::Vector2f positionTank, float rotationGun
 				iCurrFrame = 0;
 				jCurrFrame = 0;
 				explode = false;
+				deleteBullet = true;
 			}
 			else {
 				if (iCurrFrame < iFrames - 1) {
@@ -62,6 +66,13 @@ void Bullet::Update(float gameTime, sf::Vector2f positionTank, float rotationGun
 		}
 		else {
 			animationTime += gameTime;
+		}
+	}
+
+	for (auto& tank : tanks) {
+		if (shooting && nameBullet != tank->getName() && tank->takeDamage(damage, position) == 1) {
+			shooting = false;
+			explode = true;
 		}
 	}
 
@@ -84,4 +95,9 @@ void Bullet::Draw(sf::RenderWindow& w)
 		spriteBullet.setOrigin(spriteBullet.getLocalBounds().width / 2, spriteBullet.getLocalBounds().height / 2);
 		w.draw(spriteBullet);
 	}
+}
+
+bool Bullet::getDeleteBullet()
+{
+	return deleteBullet;
 }

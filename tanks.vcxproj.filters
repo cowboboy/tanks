@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -9,22 +8,25 @@
     <ClCompile Include="pWindow.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="World.cpp" />
-    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Emitter.cpp" />
+    <ClCompile Include="BulletController.cpp" />
+    <ClCompile Include="FPS.cpp" />
+    <ClCompile Include="Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h" />
-    <ClInclude Include="Entity.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="pWindow.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="World.h" />
-    <ClInclude Include="Scene.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Emitter.h" />
+    <ClInclude Include="BulletController.h" />
+    <ClInclude Include="FPS.h" />
+    <ClInclude Include="Entity.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Particles">

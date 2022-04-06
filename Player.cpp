@@ -4,118 +4,182 @@
 #include "Bullet.h"
 #include <Box2D/Box2D.h>
 #include "World.h"
+#include "BulletController.h"
 
-Player::Player(std::string f, std::string n, sf::Vector2f c, Scene* lvl, float w, float h, int s, float sR, int b, sf::Image& _imageBullet) :
-	Entity(f, n, c, w, h, s, sR), bullet()
+Player::Player(sf::Vector2f _position, std::string _nameTank, int _button)
 {
-	m_sprite.setTextureRect(sf::IntRect(0, 0, w, h));
-	m_sprite.setOrigin(w / 2, h / 2);
-	m_sprite.setPosition(m_coords);
-	m_move = false;
-	m_dir = true;
-	m_changeDir = 1;
-	button = b;
-	m_lvl = lvl;
-	m_name = n;
-	m_life = 100;
+	widthSpriteTank = 64;
+	heightSpriteTank = 48;
 
-	m_shoot = false;
+	imageTank.loadFromFile("images/tank1.png");
+	textureTank.loadFromImage(imageTank);
+	spriteTank.setTexture(textureTank);
+	spriteTank.setTextureRect(sf::IntRect(0, 0, widthSpriteTank, heightSpriteTank));
+	spriteTank.setOrigin(widthSpriteTank / 2, heightSpriteTank / 2);
+
+	//position = sf::Vector2f(200, 200);
+	position = _position;
+	speed = 10 * 2;
+	rotation = 0;
+	speedRotate = 10.f * 5;
+
+	shape.SetAsBox(widthSpriteTank / (SCALE * 2), heightSpriteTank / (SCALE * 2));
+	bdef.type = b2_dynamicBody;
+	bdef.position.Set(position.x / SCALE, position.y / SCALE);
+	body = World.CreateBody(&bdef);
+	body->CreateFixture(&shape, 100);
+
+	hitPoints = 100;
+
+	move = false;
+	dir = true;
+	changeDir = true;
+	shoot = false;
+	shooting = true;
+
+	nameTank = _nameTank;
+
+	bulletController = new BulletController(nameTank);
+
+	button = _button;
 }
 
-sf::Vector2f Player::getCoords()
-{
-	return m_coords;
-}
-/*
-void Player::shoot()
-{
-	Bullet* B = new Bullet("", m_name, getCoords(), m_lvl, 100, m_angle);
-	bullets.push_back(B);
-}*/
-
-void Player::Update(float time)
+void Player::Update(float time, std::list<Player*> tanks)
 {
 	control();
-	float lenght = sqrt(cos(m_angle * DEGTORAD) * cos(m_angle * DEGTORAD) + sin(m_angle * DEGTORAD) * sin(m_angle * DEGTORAD));
-
-	if (m_life && m_dir && !m_move) {
-		body->SetAngularVelocity(time * m_speedRotate);
-	}
-	else if (m_life &&  !m_dir && !m_move) {
-		body->SetAngularVelocity(-time * m_speedRotate);
-	}
-	else {
-		body->SetAngularDamping(time * m_speedRotate);
-	}
-	if (!m_life) {
-		m_sprite.setTextureRect(sf::IntRect(64, 0, 64, 48));
-	}
 
 	b2Vec2 pos = body->GetPosition();
-    float angle = body->GetAngle();
-	m_coords.x = pos.x * SCALE;
-	m_coords.y = pos.y * SCALE;
-	m_angle = angle * RADTODEG;
+	float angle = body->GetAngle();
+	position.x = pos.x * SCALE;
+	position.y = pos.y * SCALE;
+	rotation = angle * RADTODEG;
 
-	if (m_life && m_move) {
-		body->SetAngularVelocity(0);
-		body->SetLinearVelocity(b2Vec2(m_speed * 0.1 * cos(angle) / lenght, m_speed * 0.1 * sin(angle) / lenght));
+	if (hitPoints <= 0) {
+		spriteTank.setTextureRect(sf::IntRect(widthSpriteTank, 0, widthSpriteTank, heightSpriteTank));
+		shooting = false;
+	}
+
+	if (hitPoints >= 0 && dir && !move) {
+		body->SetAngularVelocity(time * speedRotate);
+	}
+	else if (hitPoints >= 0 && !dir && !move) {
+		body->SetAngularVelocity(-time * speedRotate);
 	}
 	else {
-		body->SetLinearDamping(m_speed);
+		body->SetAngularDamping(time * speedRotate);
 	}
 
-	m_sprite.setPosition(pos.x * SCALE, pos.y * SCALE);
-	m_sprite.setRotation(angle * RADTODEG);
-	m_move = false;
+	if (hitPoints >= 0 && move) {
+		body->SetAngularVelocity(0);
+		body->SetLinearVelocity(b2Vec2(speed * 0.1 * cos(angle), speed * 0.1 * sin(angle)));
+	} 
+	else {
+		body->SetLinearDamping(speed);
+	}
 
-	bullet.Update(time, m_coords, m_angle, m_shoot);
-	m_shoot = false;
+	spriteTank.setPosition(pos.x * SCALE, pos.y * SCALE);
+	spriteTank.setRotation(angle * RADTODEG);
+	move = false;
+
+	if (!shooting) shoot = false;
+	bulletController->Update(time, position, rotation, shoot, tanks);
+	shoot = false;
+
+	std::cout << nameTank << " " << hitPoints << std::endl;
 }
 
 void Player::control()
 {
 	switch (button) {
-	case 1:
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-			m_move = true;
-			if (m_life && m_changeDir == 1) {
-				m_dir = !m_dir;
-				m_changeDir = 0;
-				m_shoot = !m_shoot;
-				//shoot();
+	case 0:
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+			move = true;
+			if (hitPoints && changeDir) {
+				dir = !dir;
+				changeDir = false;
+				shoot = !shoot;
 			}
 		}
 		else {
-			m_changeDir = 1;
+			changeDir = true;
+		}
+		break;
+	case 1:
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+			move = true;
+			if (hitPoints && changeDir) {
+				dir = !dir;
+				changeDir = false;
+				shoot = !shoot;
+			}
+		}
+		else {
+			changeDir = true;
 		}
 		break;
 	case 2:
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-			m_move = true;
-			if (m_life && m_changeDir == 1) {
-				m_dir = !m_dir;
-				m_changeDir = 0;
-				m_shoot = !m_shoot;
-				//shoot();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
+			move = true;
+			if (hitPoints && changeDir) {
+				dir = !dir;
+				changeDir = false;
+				shoot = !shoot;
 			}
 		}
 		else {
-			m_changeDir = 1;
+			changeDir = true;
+		}
+		break;
+	case 3:
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {
+			move = true;
+			if (hitPoints && changeDir) {
+				dir = !dir;
+				changeDir = false;
+				shoot = !shoot;
+			}
+		}
+		else {
+			changeDir = true;
 		}
 		break;
 	}
 }
 
-bool Player::collisionBorder(sf::Vector2f c)
+sf::Sprite Player::getSprite()
 {
-	if (c.x > 0 && c.x < W && c.y > 0 && c.y < H) return true;
-	return false;
+	return spriteTank;
 }
 
-void Player::draw(sf::RenderWindow& w)
+std::string Player::getName()
 {
-	w.draw(m_sprite);
-	bullet.Draw(w);
-	
+	return nameTank;
+}
+
+int Player::getHitPoints()
+{
+	return hitPoints;
+}
+
+void Player::setHitPoints(int points)
+{
+	hitPoints += points;
+}
+
+int Player::takeDamage(int damage, sf::Vector2f _position)
+{
+	if (abs(position.x - _position.x) < widthSpriteTank / 2 &&
+		abs(position.y - _position.y) < widthSpriteTank / 2) {
+		hitPoints -= damage;
+		return 1;
+	}
+	return -1;
+}
+
+void Player::Draw(sf::RenderWindow& w)
+{
+	spriteTank.setPosition(position);
+	spriteTank.setRotation(rotation);
+	bulletController->Draw(w);
+	w.draw(spriteTank);
 }
