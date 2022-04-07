@@ -1,14 +1,2 @@
-﻿  Bullet.cpp
-C:\Users\r2d2t\Desktop\tanks2\tanks\Bullet.cpp(14,51): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\r2d2t\Desktop\tanks2\tanks\Bullet.cpp(15,52): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\r2d2t\Desktop\tanks2\tanks\Bullet.cpp(87,36): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\r2d2t\Desktop\tanks2\tanks\Bullet.cpp(94,35): warning C4305: 'argument': truncation from 'double' to 'float'
+﻿  Game1.cpp
   tanks.vcxproj -> C:\Users\r2d2t\Desktop\tanks2\tanks\Debug\tanks.exe

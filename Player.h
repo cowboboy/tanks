@@ -19,6 +19,8 @@ class Player
 
 	BulletController* bulletController;
 
+	sf::Vector2f positionSpawn;
+
 	sf::Vector2f position;
 	int speed;
 	float rotation;
@@ -42,6 +44,7 @@ public:
 	int getHitPoints();
 	void setHitPoints(int points);
 	int takeDamage(int damage, sf::Vector2f _position);
+	void restart();
 	Emitter* smoke;
 };
 

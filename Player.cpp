@@ -18,7 +18,8 @@ Player::Player(sf::Vector2f _position, std::string _nameTank, int _button)
 	spriteTank.setOrigin(widthSpriteTank / 2, heightSpriteTank / 2);
 
 	//position = sf::Vector2f(200, 200);
-	position = _position;
+	positionSpawn = _position;
+	position = positionSpawn;
 	speed = 10 * 2;
 	rotation = 0;
 	speedRotate = 10.f * 5;
@@ -48,8 +49,11 @@ void Player::Update(float time, std::list<Player*> tanks)
 {
 	control();
 
-	b2Vec2 pos = body->GetPosition();
-	float angle = body->GetAngle();
+	b2Vec2 pos;
+	float angle;
+	pos = body->GetPosition();
+	angle = body->GetAngle();
+
 	position.x = pos.x * SCALE;
 	position.y = pos.y * SCALE;
 	rotation = angle * RADTODEG;
@@ -57,6 +61,9 @@ void Player::Update(float time, std::list<Player*> tanks)
 	if (hitPoints <= 0) {
 		spriteTank.setTextureRect(sf::IntRect(widthSpriteTank, 0, widthSpriteTank, heightSpriteTank));
 		shooting = false;
+	}
+	else {
+		spriteTank.setTextureRect(sf::IntRect(0, 0, widthSpriteTank, heightSpriteTank));
 	}
 
 	if (hitPoints >= 0 && dir && !move) {
@@ -84,8 +91,6 @@ void Player::Update(float time, std::list<Player*> tanks)
 	if (!shooting) shoot = false;
 	bulletController->Update(time, position, rotation, shoot, tanks);
 	shoot = false;
-
-	std::cout << nameTank << " " << hitPoints << std::endl;
 }
 
 void Player::control()
@@ -174,6 +179,18 @@ int Player::takeDamage(int damage, sf::Vector2f _position)
 		return 1;
 	}
 	return -1;
+}
+
+void Player::restart()
+{
+	position = positionSpawn;
+	b2Vec2 pos;
+	float angle = 0;
+	pos.x = positionSpawn.x / SCALE;
+	pos.y = positionSpawn.y / SCALE;
+	body->SetTransform(pos, angle);
+	hitPoints = 100;
+	shooting = true;
 }
 
 void Player::Draw(sf::RenderWindow& w)
