@@ -1,7 +1,7 @@
 #include "Particle.h"
 #include <iostream>
 
-Particle::Particle(sf::Image _image, sf::Vector2f _position, sf::Vector2f _velocity, float _angle, float _angleVel, float _size, float _sizeVel, sf::Color _color, sf::Color _colorVel, float _lifeTime)
+Particle::Particle(sf::Image& _image, sf::Vector2f _position, sf::Vector2f _velocity, float _angle, float _angleVel, float _size, float _sizeVel, sf::Color _color, sf::Color _colorVel, float _lifeTime)
 {
 	image = _image;
 	texture.loadFromImage(image);

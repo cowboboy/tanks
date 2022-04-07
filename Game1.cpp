@@ -14,7 +14,6 @@ void Game1::Update(float gameTime)
 		(*tank)->Update(gameTime, tanks);
 	}
 	aliveTanks = k;
-	
 	fps.Update(gameTime);
 }
 

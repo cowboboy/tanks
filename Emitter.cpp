@@ -1,9 +1,9 @@
 #include "Emitter.h"
 
-Emitter::Emitter(sf::Image& _mainImage, sf::Image& _smokeImage)
+Emitter::Emitter()
 {
-	mainImage = _mainImage;
-	smokeImage = _smokeImage;
+	mainImage.loadFromFile("images/particle.png");
+	smokeImage.loadFromFile("images/particle.png");
 }
 
 void Emitter::Update(float time)
@@ -16,8 +16,8 @@ void Emitter::Update(float time)
 			++particle;
 		}
 		else {
-			delete* particle;
-			*particle = nullptr;
+			delete (*particle);
+			(*particle) = nullptr;
 			particle = particles.erase(particle);
 		}
 	}
@@ -39,11 +39,13 @@ sf::Vector2f Emitter::angleToVector2f(float angle, float speed)
 	return direction;
 }
 
-void Emitter::ParticleGeneration(sf::Image _image, sf::Vector2f _position, sf::Vector2f _velocity, float _angle,
+void Emitter::ParticleGeneration(sf::Image& _image, sf::Vector2f _position, sf::Vector2f _velocity, float _angle,
 	float _angleVel, float _size, float _sizeVel, sf::Color _color, sf::Color _colorVel, float _lifeTime)
 {
 	Particle* particle = new Particle(_image, _position, _velocity, _angle, _angleVel, _size, _sizeVel, _color,
 		_colorVel, _lifeTime);
+	//Particle particle(_image, _position, _velocity, _angle, _angleVel, _size, _sizeVel, _color,
+	//	_colorVel, _lifeTime);
 
 	particles.push_back(particle);
 }

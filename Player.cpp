@@ -60,6 +60,7 @@ void Player::Update(float time, std::list<Player*> tanks)
 
 	if (hitPoints <= 0) {
 		spriteTank.setTextureRect(sf::IntRect(widthSpriteTank, 0, widthSpriteTank, heightSpriteTank));
+		smokeTank.EngineSmoke(position);
 		shooting = false;
 	}
 	else {
@@ -91,6 +92,8 @@ void Player::Update(float time, std::list<Player*> tanks)
 	if (!shooting) shoot = false;
 	bulletController->Update(time, position, rotation, shoot, tanks);
 	shoot = false;
+
+	smokeTank.Update(time * 1000);
 }
 
 void Player::control()
@@ -199,4 +202,5 @@ void Player::Draw(sf::RenderWindow& w)
 	spriteTank.setRotation(rotation);
 	bulletController->Draw(w);
 	w.draw(spriteTank);
+	smokeTank.Draw(w);
 }

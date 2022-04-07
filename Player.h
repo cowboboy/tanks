@@ -33,6 +33,8 @@ class Player
 
 	int hitPoints;
 
+	Emitter smokeTank;
+
 	int button;
 public:
 	Player(sf::Vector2f _position, std::string _nameTank, int _button);
@@ -45,6 +47,5 @@ public:
 	void setHitPoints(int points);
 	int takeDamage(int damage, sf::Vector2f _position);
 	void restart();
-	Emitter* smoke;
 };
 
