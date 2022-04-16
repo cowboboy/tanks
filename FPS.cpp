@@ -13,7 +13,7 @@ FPS::FPS() : fps(0), frames(0), timer(0)
 void FPS::Update(float gameTime)
 {
 	timer += gameTime;
-	if (timer >= 1.f) {
+	if (timer >= 1000.f) {
 		timer = 0;
 		fps = frames;
 		frames = 0;

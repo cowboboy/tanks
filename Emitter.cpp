@@ -2,8 +2,8 @@
 
 Emitter::Emitter()
 {
-	mainImage.loadFromFile("images/particle.png");
-	smokeImage.loadFromFile("images/particle.png");
+	mainImage.loadFromFile("images/particleSmoke.png");
+	smokeImage.loadFromFile("images/particleFire.png");
 }
 
 void Emitter::Update(float time)
@@ -52,7 +52,7 @@ void Emitter::ParticleGeneration(sf::Image& _image, sf::Vector2f _position, sf::
 
 void Emitter::EngineSmoke(sf::Vector2f position)
 {
-	if (particles.size() < 20) {
+	if (particles.size() < 100) {
 		position.x += -2 + rand() % 3;
 		position.y += -4 + rand() % 10;
 
@@ -97,7 +97,7 @@ void Emitter::EngineSmoke(sf::Vector2f position)
 
 		float size2 = 0.3f + 0.7f * rand() / (float)RAND_MAX;
 
-		float lifeTime2 = 1000;
+		float lifeTime2 = 500;
 
 		float sizeVel2 = -0.00005f;
 

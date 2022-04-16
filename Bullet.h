@@ -3,6 +3,8 @@
 #include <list>
 #include "Config.h"
 #include "Player.h"
+#include "OBB.h"
+#include "Object.h"
 
 class Player;
 
@@ -27,7 +29,7 @@ class Bullet {
 
 	bool shooting;
 
-	const float timeLife = 3;
+	const float timeLife = 3000;
 	float currTimeLife;
 
 	int damage;
@@ -35,7 +37,8 @@ class Bullet {
 	bool deleteBullet;
 public:
 	Bullet(sf::Sprite _spriteBullet, sf::Sprite _spriteExplosion, std::string _nameBullet);
-	void Update(float gameTime, sf::Vector2f positionTank, float rotationGun, bool shoot, std::list<Player*> tanks);
+	void Update(float gameTime, sf::Vector2f positionTank, float rotationGun, bool shoot, std::list<Player*> tanks,
+		std::list<Object*> objects);
 	void Draw(sf::RenderWindow& w);
 	bool getDeleteBullet();
 };

@@ -14,6 +14,13 @@
     <ClCompile Include="FPS.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game1.cpp" />
+    <ClCompile Include="OBB.cpp" />
+    <ClCompile Include="ToxicSmoke.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="TreeObject.cpp" />
+    <ClCompile Include="Box.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h" />
@@ -29,6 +36,13 @@
     <ClInclude Include="FPS.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game1.h" />
+    <ClInclude Include="OBB.h" />
+    <ClInclude Include="ToxicSmoke.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="TreeObject.h" />
+    <ClInclude Include="Box.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Particles">

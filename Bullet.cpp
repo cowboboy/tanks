@@ -27,7 +27,8 @@ Bullet::Bullet(sf::Sprite _spriteBullet, sf::Sprite _spriteExplosion, std::strin
 	nameBullet = _nameBullet;
 }
 
-void Bullet::Update(float gameTime, sf::Vector2f positionTank, float rotationGun, bool shoot, std::list<Player*> tanks)
+void Bullet::Update(float gameTime, sf::Vector2f positionTank, float rotationGun, bool shoot, std::list<Player*> tanks,
+	std::list<Object*> objects)
 {
 	if (!shooting && !explode) {
 		shooting = shoot;
@@ -42,7 +43,7 @@ void Bullet::Update(float gameTime, sf::Vector2f positionTank, float rotationGun
 	}
 
 	if (shooting) {
-		position += speed * sf::Vector2f(cos(rotation * DEGTORAD), sin(rotation * DEGTORAD)) * gameTime * 100.f; 
+		position += speed * sf::Vector2f(cos(rotation * DEGTORAD), sin(rotation * DEGTORAD)) * gameTime; 
 	}
 
 	if (explode) {
@@ -70,9 +71,16 @@ void Bullet::Update(float gameTime, sf::Vector2f positionTank, float rotationGun
 	}
 
 	for (auto& tank : tanks) {
-		if (shooting && nameBullet != tank->getName() && tank->takeDamage(damage, position) == 1) {
+		if (shooting && nameBullet != tank->getName() && tank->takeDamage(damage, spriteBullet, position, rotation) == 1) {
 			shooting = false;
 			explode = true;
+		}
+	}
+	for (auto& object : objects) {
+		if (abs(object->position.x - position.x) < 10 && abs(object->position.y - position.y) < 10) {
+			shooting = false;
+			explode = true;
+			object->reObject();
 		}
 	}
 

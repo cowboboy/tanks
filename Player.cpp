@@ -5,24 +5,25 @@
 #include <Box2D/Box2D.h>
 #include "World.h"
 #include "BulletController.h"
+#include "OBB.h"
 
-Player::Player(sf::Vector2f _position, std::string _nameTank, int _button)
+Player::Player(sf::Image& _imageTank, sf::Vector2f _position, std::string _nameTank, int _button)
 {
-	widthSpriteTank = 64;
-	heightSpriteTank = 48;
-
-	imageTank.loadFromFile("images/tank1.png");
+	imageTank = _imageTank;
 	textureTank.loadFromImage(imageTank);
 	spriteTank.setTexture(textureTank);
+	heightSpriteTank = 61;
+	widthSpriteTank = 118;
 	spriteTank.setTextureRect(sf::IntRect(0, 0, widthSpriteTank, heightSpriteTank));
 	spriteTank.setOrigin(widthSpriteTank / 2, heightSpriteTank / 2);
 
 	//position = sf::Vector2f(200, 200);
 	positionSpawn = _position;
 	position = positionSpawn;
-	speed = 10 * 2;
+	speed = 10;
+	speedBraking = speed * 10;
 	rotation = 0;
-	speedRotate = 10.f * 5;
+	speedRotate = 15;
 
 	shape.SetAsBox(widthSpriteTank / (SCALE * 2), heightSpriteTank / (SCALE * 2));
 	bdef.type = b2_dynamicBody;
@@ -45,7 +46,7 @@ Player::Player(sf::Vector2f _position, std::string _nameTank, int _button)
 	button = _button;
 }
 
-void Player::Update(float time, std::list<Player*> tanks)
+void Player::Update(float time, std::list<Player*> tanks, std::list<Object*> objects)
 {
 	control();
 
@@ -63,26 +64,42 @@ void Player::Update(float time, std::list<Player*> tanks)
 		smokeTank.EngineSmoke(position);
 		shooting = false;
 	}
+	else if (hitPoints <= 20) {
+
+
+		smokeTank.EngineSmoke(position);
+	}
 	else {
 		spriteTank.setTextureRect(sf::IntRect(0, 0, widthSpriteTank, heightSpriteTank));
 	}
 
 	if (hitPoints >= 0 && dir && !move) {
-		body->SetAngularVelocity(time * speedRotate);
+		body->SetAngularVelocity(time * speedRotate * 0.01f);
 	}
 	else if (hitPoints >= 0 && !dir && !move) {
-		body->SetAngularVelocity(-time * speedRotate);
+		body->SetAngularVelocity(-time * speedRotate * 0.01f);
 	}
 	else {
-		body->SetAngularDamping(time * speedRotate);
+		body->SetAngularDamping(time * speedRotate * 0.01f);
 	}
 
 	if (hitPoints >= 0 && move) {
 		body->SetAngularVelocity(0);
-		body->SetLinearVelocity(b2Vec2(speed * 0.1 * cos(angle), speed * 0.1 * sin(angle)));
+		body->SetLinearVelocity(b2Vec2(speed * cos(angle), speed * sin(angle)));
 	} 
 	else {
-		body->SetLinearDamping(speed);
+		body->SetLinearDamping(speedBraking);
+	}
+	
+	for (auto& object : objects) {
+		sf::Vector2f a;
+		if (testCollision(spriteToRecShape(spriteTank, position, rotation),
+			spriteToRecShape(object->spriteObject, object->position, 0), a)) {
+			object->reObject();
+			/*
+			hitPoints = 100;
+			object->life = false;*/
+		}
 	}
 
 	spriteTank.setPosition(pos.x * SCALE, pos.y * SCALE);
@@ -90,10 +107,10 @@ void Player::Update(float time, std::list<Player*> tanks)
 	move = false;
 
 	if (!shooting) shoot = false;
-	bulletController->Update(time, position, rotation, shoot, tanks);
+	bulletController->Update(time, position, rotation, shoot, tanks, objects);
 	shoot = false;
 
-	smokeTank.Update(time * 1000);
+	smokeTank.Update(time);
 }
 
 void Player::control()
@@ -174,12 +191,16 @@ void Player::setHitPoints(int points)
 	hitPoints += points;
 }
 
-int Player::takeDamage(int damage, sf::Vector2f _position)
+int Player::takeDamage(int damage, sf::Sprite _spriteBullet, sf::Vector2f _position, float _rotation)
 {
 	if (abs(position.x - _position.x) < widthSpriteTank / 2 &&
 		abs(position.y - _position.y) < widthSpriteTank / 2) {
-		hitPoints -= damage;
-		return 1;
+		sf::Vector2f a;
+		if (testCollision(spriteToRecShape(_spriteBullet, _position, _rotation), 
+			spriteToRecShape(spriteTank, position, rotation), a)) {
+			hitPoints -= damage;
+			return 1;
+		}
 	}
 	return -1;
 }

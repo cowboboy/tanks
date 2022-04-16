@@ -13,11 +13,12 @@ BulletController::BulletController(std::string _nameTank)
 	nameTank = _nameTank;
 
 	shoot = false;
-	recharge = 1;
+	recharge = 1000;
 	timer = recharge;
 }
 
-void BulletController::Update(float gameTime, sf::Vector2f positionTank, float rotationGun, bool _shoot, std::list<Player*> tanks)
+void BulletController::Update(float gameTime, sf::Vector2f positionTank, float rotationGun, bool _shoot, std::list<Player*> tanks,
+	std::list<Object*> objects)
 {
 	if (timer > 0) {
 		timer -= gameTime;
@@ -34,7 +35,7 @@ void BulletController::Update(float gameTime, sf::Vector2f positionTank, float r
 
 	for (auto bullet = bullets.begin(); bullet != bullets.end();)
 	{
-		bullet->Update(gameTime, positionTank, rotationGun, shoot, tanks);
+		bullet->Update(gameTime, positionTank, rotationGun, shoot, tanks, objects);
 		if (bullet->getDeleteBullet())
 		{
 			bullet = bullets.erase(bullet);

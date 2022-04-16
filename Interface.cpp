@@ -1,7 +1,7 @@
 #include "Interface.h"
 #include "Map.h"
 
-Interface::Interface(int w, int h) : W(w), H(h), timer(300)
+Interface::Interface() : timer(900)
 {
 	font.loadFromFile("fonts/Samson.ttf");
 	timerText.setString("00:00");
