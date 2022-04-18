@@ -88,7 +88,7 @@ std::array<sf::Vector2f, 4> getPerpendicularAxes(const RectVertexArray& vertices
 	return axes;
 }
 
-sf::RectangleShape spriteToRecShape(sf::Sprite& sprite, sf::Vector2f position, float rotation)
+sf::RectangleShape spriteToRecShape(sf::Sprite sprite, sf::Vector2f position, float rotation)
 {
 	sf::RectangleShape rec;
 	int width = sprite.getLocalBounds().width;

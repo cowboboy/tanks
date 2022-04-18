@@ -14,6 +14,7 @@ class Bullet {
 	sf::Sprite spriteExplosion;
 
 	sf::Vector2f position;
+	sf::Vector2f velocity;
 
 	std::string nameBullet;
 
@@ -41,6 +42,10 @@ public:
 		std::list<Object*> objects);
 	void Draw(sf::RenderWindow& w);
 	bool getDeleteBullet();
+	sf::Vector2f angleToVector2f(float angle, float speed);
+	sf::Vector2f getPosition();
+	float getRotation();
+	sf::Sprite& getSprite();
 };
 
 

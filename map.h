@@ -4,6 +4,7 @@
 #include <Object.h>
 #include "TreeObject.h"
 #include <Interface.h>
+#include <Dot.h>
 
 class Map {
 	sf::Image imageMap1;
@@ -27,13 +28,15 @@ class Map {
 
 	int widthSpriteMap, heightSpriteMap;
 
+	Dot dot;
+
 	void randomTree();
 	void randomTwigs();
 
 	std::list<Object*> objects;
 public:
 	Map();
-	void Update(float time);
+	void Update(float time, std::list<Player*> tanks);
 	void draw(sf::RenderWindow& w);
 	std::list<Object*>& getObjects();
 	void restartMap();

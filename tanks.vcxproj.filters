@@ -21,6 +21,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="TreeObject.cpp" />
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Dot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h" />
@@ -43,6 +44,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="TreeObject.h" />
     <ClInclude Include="Box.h" />
+    <ClInclude Include="Dot.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Particles">

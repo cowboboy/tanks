@@ -9,6 +9,7 @@
 #include "ToxicSmoke.h"
 #include <Menu.h>
 #include <map.h>
+#include "BulletController.h"
 
 class Game1
 {

@@ -191,13 +191,13 @@ void Player::setHitPoints(int points)
 	hitPoints += points;
 }
 
-int Player::takeDamage(int damage, sf::Sprite _spriteBullet, sf::Vector2f _position, float _rotation)
+int Player::takeDamage(int damage, sf::Sprite _spriteBullet, sf::Vector2f& _velocity, sf::Vector2f _position, float _rotation)
 {
 	if (abs(position.x - _position.x) < widthSpriteTank / 2 &&
 		abs(position.y - _position.y) < widthSpriteTank / 2) {
-		sf::Vector2f a;
+		sf::Vector2f n;
 		if (testCollision(spriteToRecShape(_spriteBullet, _position, _rotation), 
-			spriteToRecShape(spriteTank, position, rotation), a)) {
+			spriteToRecShape(spriteTank, position, rotation), n)) {
 			hitPoints -= damage;
 			return 1;
 		}

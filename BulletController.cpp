@@ -2,7 +2,7 @@
 
 BulletController::BulletController(std::string _nameTank)
 {
-	imageBullet.loadFromFile("images/bullet.png");
+	imageBullet.loadFromFile("images/ammo.png");
 	textureBullet.loadFromImage(imageBullet);
 	spriteBullet.setTexture(textureBullet);
 

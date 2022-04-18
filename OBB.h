@@ -16,4 +16,4 @@ sf::Vector2f getCenter(const sf::RectangleShape& shape);
 RectVertexArray getVertices(const sf::RectangleShape& shape);
 sf::Vector2f getPerpendicularAxis(const RectVertexArray& vertices, std::size_t index);
 std::array<sf::Vector2f, 4> getPerpendicularAxes(const RectVertexArray& vertices1, const RectVertexArray& vertices2);
-sf::RectangleShape spriteToRecShape(sf::Sprite& sprite, sf::Vector2f position, float rotation);
+sf::RectangleShape spriteToRecShape(sf::Sprite sprite, sf::Vector2f position, float rotation);

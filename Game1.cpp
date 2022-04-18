@@ -28,15 +28,20 @@ void Game1::startGame(int players)
 			(*tank)->restart();
 		}
 	}
+
 }
 
 void Game1::endGame()
 {
+	for (auto tank = tanks.begin(); tank != tanks.end();)
+	{
+		tank = tanks.erase(tank);
+	}
 }
 
 void Game1::Update(float gameTime)
 {
-	map.Update(gameTime);
+	map.Update(gameTime, tanks);
 	if (!isGame && !menu) {
 		menu = new Menu();
 	}

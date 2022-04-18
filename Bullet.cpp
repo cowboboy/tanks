@@ -16,7 +16,7 @@ Bullet::Bullet(sf::Sprite _spriteBullet, sf::Sprite _spriteExplosion, std::strin
 	explode = false;
 	animationTime = 0;  
 
-	position = sf::Vector2f(0, 0);
+	//position = sf::Vector2f(0, 0);
 
 	currTimeLife = timeLife;
 
@@ -42,8 +42,11 @@ void Bullet::Update(float gameTime, sf::Vector2f positionTank, float rotationGun
 		explode = true;
 	}
 
+	velocity = angleToVector2f(rotation, speed);
+
 	if (shooting) {
-		position += speed * sf::Vector2f(cos(rotation * DEGTORAD), sin(rotation * DEGTORAD)) * gameTime; 
+		//position += speed * sf::Vector2f(cos(rotation * DEGTORAD), sin(rotation * DEGTORAD)) * gameTime; 
+		position += velocity * gameTime;
 	}
 
 	if (explode) {
@@ -71,16 +74,28 @@ void Bullet::Update(float gameTime, sf::Vector2f positionTank, float rotationGun
 	}
 
 	for (auto& tank : tanks) {
-		if (shooting && nameBullet != tank->getName() && tank->takeDamage(damage, spriteBullet, position, rotation) == 1) {
+		if (shooting && nameBullet != tank->getName() && tank->takeDamage(damage, spriteBullet, velocity, position, rotation) == 1) {
+			
 			shooting = false;
 			explode = true;
 		}
 	}
 	for (auto& object : objects) {
+		/*
 		if (abs(object->position.x - position.x) < 10 && abs(object->position.y - position.y) < 10) {
 			shooting = false;
 			explode = true;
 			object->reObject();
+		}*/
+		sf::Vector2f a;
+		if (testCollision(spriteToRecShape(spriteBullet, position, rotation),
+			spriteToRecShape(object->spriteObject, object->position, 0), a)) {
+			object->reObject();
+			shooting = false;
+			explode = true;
+			/*
+			hitPoints = 100;
+			object->life = false;*/
 		}
 	}
 
@@ -99,7 +114,6 @@ void Bullet::Draw(sf::RenderWindow& w)
 	if (shooting) {
 		spriteBullet.setPosition(position);
 		spriteBullet.setRotation(rotation);
-		spriteBullet.setScale(0.03, 0.03);
 		spriteBullet.setOrigin(spriteBullet.getLocalBounds().width / 2, spriteBullet.getLocalBounds().height / 2);
 		w.draw(spriteBullet);
 	}
@@ -108,4 +122,28 @@ void Bullet::Draw(sf::RenderWindow& w)
 bool Bullet::getDeleteBullet()
 {
 	return deleteBullet;
+}
+
+sf::Vector2f Bullet::angleToVector2f(float angle, float speed)
+{
+	sf::Vector2f direction;
+
+	direction.x = speed * cos(angle * DEGTORAD);
+	direction.y = speed * sin(angle * DEGTORAD);
+	return direction;
+}
+
+sf::Vector2f Bullet::getPosition()
+{
+	return position;
+}
+
+float Bullet::getRotation()
+{
+	return rotation;
+}
+
+sf::Sprite& Bullet::getSprite()
+{
+	return spriteBullet;
 }

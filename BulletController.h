@@ -21,12 +21,14 @@ class BulletController
 	std::list<Bullet> bullets;
 
 	bool shoot;
-	float recharge;
+	
 	float timer;
 public:
 	BulletController(std::string _nameTank);
 	void Update(float gameTime, sf::Vector2f positionTank, float rotationGun, bool _shoot, std::list<Player*> tanks,
 		std::list<Object*> objects);
 	void Draw(sf::RenderWindow& w);
+
+	float recharge;
 };
 

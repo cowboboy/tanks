@@ -47,7 +47,7 @@ public:
 	std::string getName();
 	int getHitPoints();
 	void setHitPoints(int points);
-	int takeDamage(int damage, sf::Sprite _spriteBullet, sf::Vector2f _position, float _rotation);
+	int takeDamage(int damage, sf::Sprite _spriteBullet, sf::Vector2f& _velocity, sf::Vector2f _position, float _rotation);
 	void restart();
 };
 

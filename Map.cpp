@@ -29,7 +29,7 @@ void Map::randomTwigs()
 	}
 }
 
-Map::Map()
+Map::Map() : dot(sf::Vector2f(W / 2, H / 2))
 {
 	imageMap1.loadFromFile("images/dirt.png");
 	imageMap2.loadFromFile("images/ground_06.png");
@@ -50,9 +50,9 @@ Map::Map()
 	restartMap();
 }
 
-void Map::Update(float time)
+void Map::Update(float time, std::list<Player*> tanks)
 {
-	
+	dot.Update(time, tanks, objects);
 }
 
 void Map::draw(sf::RenderWindow& w)
@@ -68,6 +68,7 @@ void Map::draw(sf::RenderWindow& w)
 	for (auto object : objects) {
 		object->Draw(w);
 	}
+	dot.draw(w);
 }
 
 std::list<Object*>& Map::getObjects()
